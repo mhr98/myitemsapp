@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Main
+{% endblock %}
+
+{% block main %}
+    <div >
+        
+                
+                <h2 style="color: rgb(0, 0, 0, 0.6);  padding-bottom: 1rem " >All Items</h2>    
+                
+                <div class="form-group"  > 
+                
+                <form action="/" method="post">
+                    
+                    <select name="sortby" class="form-control">
+                        <option disabled selected vlue="">Sort by </option> 
+                        <option vlue="name">name</option>
+                        <option vlue="num">num</option> 
+                    </select>
+                    
+                    <select name="order" class="form-control">
+                        <option selected vlue="descending">descending</option> 
+                        <option vlue="ascending">ascending</option> 
+                    </select> 
+                    <div class="form-group" style = "padding-top: 1rem; padding-bottom: 1rem" >  
+                    <button class="btn btn-primary" type="submit">SORT</button>
+                    </div> 
+                </form>
+                </div> 
+                
+                <table > 
+                    <thead>
+                        <tr>
+                            <th style="color: rgb(0, 0, 0, 0.6); ">Name</th>
+                            <th style="color: rgb(0, 0, 0, 0.6); ">num.</th>  
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- TODO: Loop through the database entries to display them in this table -->
+                        {% for item in items %}
+                            <tr>
+                                <td>{{ item.item }}</td> 
+                                <td>{{item.count}}</td>   
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div
+{% endblock %}

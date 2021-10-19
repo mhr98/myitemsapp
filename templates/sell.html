@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    SELL
+{% endblock %} 
+
+{% block main %}
+    <form action="/sell" method="post">
+        <div class="form-group">
+            <input id="name" autocomplete="off" autofocus class="form-control" name="q" placeholder="Seaech" type="text">
+        </div>
+        <div class="form-group">
+            <select id="items" name="item" class="form-control">    
+                <option disabled selected vlue="">Search for item first </option> 
+            </select>
+        </div>
+        <div class="form-group">
+            <input class="form-control" autocomplete="off" name="count" placeholder="number of pieces" type="text">
+        </div>
+        <button class="btn btn-primary" type="submit">SELL</button> 
+
+    </form>
+
+    <script crossorigin="anonymous" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script>
+        let input = document.querySelector("#name"); 
+        let text = document.querySelector("#items");
+        input.addEventListener("keyup", function() {
+            let html= "<option disabled selected vlue=" + "" + ">" + "Select item" + "</option>"; 
+            $.get("/search?q=" + input.value, function(items) {
+            for (let id in items)
+                {
+               let title = "<option vlue=" + items[id].item + ">" + items[id].item + "</option>" ;
+               html += title;       
+                }    
+            document.querySelector("#items").innerHTML = html; 
+            });
+            }); 
+                
+
+    </script>
+{% endblock %}
