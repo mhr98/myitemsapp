@@ -8,7 +8,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 app = Flask(__name__)
 
-"""after coment"""
+
  
 
 app.config["TEMPLATES_AUTO_RELOAD"] = True
