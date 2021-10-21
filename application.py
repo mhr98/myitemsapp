@@ -45,6 +45,7 @@ def index():
 def add():
     """Buy shares of stock"""
     if request.method == "POST":
+        db.execute("BEGIN TRANSACTION")
         if not request.form.get("name"):
             return apology("must provide name ")
         elif not request.form.get("count"):
@@ -53,7 +54,8 @@ def add():
         count=request.form.get("count")
         if not count.isnumeric():
             return apology("enter valid number for the pieces") 
-        db.execute("INSERT INTO items (item , count) VALUES(?,?)",name, count)  
+        db.execute("INSERT INTO items (item , count) VALUES(?,?)",name, count) 
+        db.execute("COMMIT")  
         return redirect("/")  
       
     return render_template("add.html")
