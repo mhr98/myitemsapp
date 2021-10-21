@@ -1,15 +1,12 @@
 from cs50 import SQL
 from flask import Flask, redirect, render_template ,jsonify, session, request
-from flask_session import Session
+from flask_session import Session 
 from helpers import login_required , apology
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError 
 from tempfile import mkdtemp 
 from werkzeug.security import check_password_hash, generate_password_hash
 
-app = Flask(__name__)
-
-
- 
+app = Flask(__name__) 
 
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 
@@ -66,6 +63,7 @@ def add():
 def sell():
     """Sell shares of stock"""
     if request.method == "POST":
+        db.execute("BEGIN TRANSACTION")
         item=request.form.get("item")
         if not item:
             return apology("enter valid input") 
@@ -75,11 +73,12 @@ def sell():
             return apology("enter valid input")
         if not sell.isnumeric():
             return apology("enter valid number for the pieces") 
-        count= oldc - sell       
+        count= oldc - int(sell)        
         if count<0:
             return apology("There is no enogh items ")
             
         db.execute("UPDATE items SET count = ? WHERE item  = ? ",count, item )
+        db.execute("COMMIT")  
         return redirect("/")  
     
     return render_template("/sell.html") 
